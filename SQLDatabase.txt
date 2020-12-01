@@ -1,0 +1,24 @@
+CREATE TABLE `Sinvher_TestMySQL`.`User` ( `UserID` INT NOT NULL AUTO_INCREMENT , `Username` TEXT SET utf8 COLLATE utf8_general_ci NOT NULL , `Userpasswort` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Thema` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Kreiert` DATETIME NOT NULL , `LetzterLogin` DATETIME NOT NULL , `Sprache` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `BarriereModus` BOOLEAN NOT NULL , PRIMARY KEY (`UserID`)) ENGINE = InnoDB;
+
+CREATE TABLE `Sinvher_TestMySQL`.`Gruppe` ( `GruppeID` INT NOT NULL AUTO_INCREMENT , `Haushaltsname` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Haushaltspasswort` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , PRIMARY KEY (`GruppeID`)) ENGINE = InnoDB; 
+
+CREATE TABLE `Sinvher_TestMySQL`.`Liste` ( `ListeID` INT NOT NULL AUTO_INCREMENT , `Listenname` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Listenpasswort` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Listenicon` INT NOT NULL , `LetzterEdit` DATETIME NOT NULL , PRIMARY KEY (`ListeID`)) ENGINE = InnoDB; 
+
+CREATE TABLE `Sinvher_TestMySQL`.`Produkt` ( `ProduktID` INT NOT NULL AUTO_INCREMENT , `Produktcode` BIGINT NULL , `Produktname` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Gewicht` INT NULL , `Einheit` TEXT NULL , `Menge` INT NULL , `Produkticon` INT NULL , `Kategorie` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `Mindesthaltbarkeit` DATE NULL , `Bemerkung` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , PRIMARY KEY (`ProduktID`)) ENGINE = InnoDB; 
+
+CREATE TABLE `Sinvher_TestMySQL`.`ZProduktlisteMapping` ( `MapPrdID` INT NOT NULL AUTO_INCREMENT , `ProduktID` INT NOT NULL , `ListeID` INT NOT NULL , PRIMARY KEY (`MapPrdID`)) ENGINE = InnoDB; 
+
+ALTER TABLE `ZProduktlisteMapping` ADD FOREIGN KEY (`ListeID`) REFERENCES `Liste`(`ListeID`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `ZProduktlisteMapping` ADD FOREIGN KEY (`ProduktID`) REFERENCES `Produkt`(`ProduktID`) ON DELETE CASCADE ON UPDATE CASCADE; 
+
+CREATE TABLE `Sinvher_TestMySQL`.`ZGruppenlisteMapping` ( `MapGrpID` INT NOT NULL AUTO_INCREMENT , `ListeID` INT NOT NULL , `GruppeID` INT NOT NULL , PRIMARY KEY (`MapGrpID`)) ENGINE = InnoDB; 
+
+ALTER TABLE `ZGruppenlisteMapping` ADD FOREIGN KEY (`ListeID`) REFERENCES `Liste`(`ListeID`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `ZGruppenlisteMapping` ADD FOREIGN KEY (`GruppeID`) REFERENCES `Gruppe`(`GruppeID`) ON DELETE CASCADE ON UPDATE CASCADE; 
+
+CREATE TABLE `Sinvher_TestMySQL`.`ZGruppenuserMapping` ( `MapGrpuserID` INT NOT NULL AUTO_INCREMENT , `GruppeID` INT NOT NULL , `UserID` INT NOT NULL , PRIMARY KEY (`MapGrpuserID`)) ENGINE = InnoDB; 
+
+ALTER TABLE `ZGruppenuserMapping` ADD FOREIGN KEY (`GruppeID`) REFERENCES `Gruppe`(`GruppeID`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `ZGruppenuserMapping` ADD FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE ON UPDATE CASCADE; 
+
+
+
+
+
